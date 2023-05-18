@@ -1,0 +1,37 @@
+docker run -d --name mysql-server        \
+     --network mysql-net                 \
+     -p "3306:3306"                      \
+     -e "MYSQL_RANDOM_ROOT_PASSWORD=yes" \
+     -e "MYSQL_DATABASE=project2"      \
+     -e "MYSQL_USER=project2"          \
+     -e "MYSQL_PASSWORD=hunter2"         \
+     mysql
+
+
+CREATE TABLE businesses (
+  id MEDIUMINT NOT NULL AUTO_INCREMENT,
+  ownerid MEDIUMINT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  city VARCHAR(255) NOT NULL,
+  state CHAR(2) NOT NULL,
+  zip CHAR(5) NOT NULL,
+  phone VARCHAR(15) NOT NULL,
+  category VARCHAR(255) NOT NULL,
+  subcategory VARCHAR(255) NOT NULL,
+  website VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  INDEX idx_ownerid (ownerid)
+);
+
+INSERT INTO businesses VALUES (
+  NULL,
+  1,
+  'My business',
+  '123 SW 1st St.',
+  'Corvallis', 'OR', '97333',
+  5416771280,
+  'category',
+  'subcategory',
+  'website.com'
+);
