@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { validateAgainstSchema, extractValidFields } = require('../lib/validation');
+const mysqlPool = require('../lib/mysqlPool');
+
 
 const businesses = require('../data/businesses');
 const { reviews } = require('./reviews');
@@ -39,6 +41,7 @@ async function createBusinessesTable() {
       category VARCHAR(255) NOT NULL,
       subcategory VARCHAR(255) NOT NULL,
       website VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
       PRIMARY KEY (id),
       INDEX idx_ownerid (ownerid)
     )`
@@ -80,8 +83,8 @@ async function getBusinessById(businessId) {
   const [ results ] = await mysqlPool.query(
     'SELECT * FROM businesses WHERE id = ?',
     [ businessId ],
-);
-return results[0];
+  );
+  return results[0];
 }
 
 async function insertNewBusiness(business) {
